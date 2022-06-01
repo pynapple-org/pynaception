@@ -2,28 +2,26 @@
     Minimal working example
 
 '''
-
+import os, sys
 import numpy as np
 import matplotlib.pyplot as plt
 import pynapple as nap
+from pynarchy import scope
+
 
 DATA_DIRECTORY = '/home/guillaume/pynapple/your/path/to/A2929-200711'
 
 # LOADING DATA
 data = nap.load_session(DATA_DIRECTORY, 'neurosuite')
-
 spikes = data.spikes
+position = data.position
+angle = position['ry']
+wake_ep = data.epochs['wake']
 
-#########################################################################
-
-a = 1
-
-tmp = locals()
-pynavar = {}
-for k in tmp.keys():                                                           
-    if hasattr(tmp[k], '__module__'):
-        if "pynapple" in a[k].__module__ and k[0] != '_':
-            pynavar[k] = tmp[k]
+lfp = data.load_lfp(channel =15)
 
 
-#####################################################
+
+#sscope(globals())
+
+
