@@ -6,7 +6,7 @@ import os, sys
 import numpy as np
 import matplotlib.pyplot as plt
 import pynapple as nap
-from pynarchy import scope
+from pynaception import scope
 
 
 DATA_DIRECTORY = '/home/guillaume/pynapple/your/path/to/A2929-200711'
@@ -18,10 +18,9 @@ position = data.position
 angle = position['ry']
 wake_ep = data.epochs['wake']
 
-lfp = data.load_lfp(channel =15)
+lfp = data.load_lfp(channel=15)
 
 
-
-#sscope(globals())
+scope(globals())
 
 
