@@ -2,7 +2,7 @@
 # @Author: gviejo
 # @Date:   2022-05-26 16:11:25
 # @Last Modified by:   gviejo
-# @Last Modified time: 2022-06-01 18:06:05
+# @Last Modified time: 2023-04-19 13:43:30
 
 
 from .qt import QWidget, QDockWidget, Qt, QSize, QHBoxLayout, QLabel, QVBoxLayout
@@ -118,7 +118,7 @@ class Controller(QDockWidget):
             self.add_raster_view(var, item.text())
         elif isinstance(var, nap.Tsd):
             self.add_tsd_view(var, item.text())
-        elif isinstance(var, nap.tsdframe):
+        elif isinstance(var, nap.TsdFrame):
             self.add_tsdframe_view(var, item.text())
             
         return

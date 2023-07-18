@@ -39,7 +39,7 @@ class GUI(QMainWindow):
 
         self.setDockOptions(QMainWindow.AllowTabbedDocks | QMainWindow.AllowNestedDocks)
         self.setAnimated(False)
-        self.name = 'pynarchy'
+        self.name = 'pynaception'
         self.setWindowTitle(self.name)
         self.setObjectName(self.name)
 

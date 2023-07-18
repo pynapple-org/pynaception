@@ -21,6 +21,5 @@ wake_ep = data.epochs['wake']
 lfp = data.load_lfp(channel=15)
 
 
-scope(globals())
-
+#scope(globals())
 
