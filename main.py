@@ -9,7 +9,7 @@ import pynapple as nap
 from pynaception import scope
 
 
-DATA_DIRECTORY = '/home/guillaume/pynapple/your/path/to/A2929-200711'
+DATA_DIRECTORY = '/mnt/home/gviejo/pynapple/your/path/to/MyProject/sub-A2929/A2929-200711'
 
 # LOADING DATA
 data = nap.load_session(DATA_DIRECTORY, 'neurosuite')
@@ -21,5 +21,5 @@ wake_ep = data.epochs['wake']
 lfp = data.load_lfp(channel=15)
 
 
-#scope(globals())
+scope(globals())
 

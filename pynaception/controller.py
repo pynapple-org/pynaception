@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 # @Author: gviejo
 # @Date:   2022-05-26 16:11:25
-# @Last Modified by:   gviejo
-# @Last Modified time: 2023-04-19 13:43:30
+# @Last Modified by:   Guillaume Viejo
+# @Last Modified time: 2023-07-21 18:01:27
 
 
 from .qt import QWidget, QDockWidget, Qt, QSize, QHBoxLayout, QLabel, QVBoxLayout
 from PyQt5.QtWidgets import QListWidget
 import pynapple as nap
-# from .raster import RasterView
-# from .line import LineView
 
 from .pynaviews import TsGroupView, TsdView
 
@@ -50,8 +48,6 @@ DOCK_TITLE_STYLESHEET = '''
         background: #6c717a;
     }
 '''
-
-
 DOCK_STATUS_STYLESHEET = '''
     * {
         padding: 0;

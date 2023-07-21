@@ -1,13 +1,23 @@
 # -*- coding: utf-8 -*-
 # @Author: gviejo
 # @Date:   2022-05-31 22:40:08
-# @Last Modified by:   gviejo
-# @Last Modified time: 2022-05-31 22:51:14
+# @Last Modified by:   Guillaume Viejo
+# @Last Modified time: 2023-07-21 18:11:43
 
+import sys
 
-from .qt import create_app, run_app, Qt
 from .gui import GUI
 from .controller import Controller
+
+
+######### QT @@@@@@@@@@@@@@@@@@@@@@@@@@
+# from OpenGL import GL  # noqa
+
+from PyQt5.QtWidgets import QApplication
+
+# ######### SDL2 @@@@@@@@@@@@@@@@@@@@@@@
+# import sdl2.ext
+# import sdl2
 
 
 
@@ -25,7 +35,11 @@ def get_pynapple_variables(variables):
 def scope(variables):
     pynavar = get_pynapple_variables(variables)
     
-    create_app()
+    global QT_APP
+    QT_APP = QApplication.instance()
+    if QT_APP is None:  # pragma: no cover
+        QT_APP = QApplication(sys.argv)
+
 
     gui = GUI()
 
@@ -33,7 +47,7 @@ def scope(variables):
 
     gui.show()
 
-    run_app()
+    QT_APP.exit(QT_APP.exec_())
 
     gui.close()
 

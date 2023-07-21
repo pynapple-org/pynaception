@@ -22,13 +22,74 @@ import numpy as np
 from .base import BaseVisual
 from .gloo import gl
 from .transform import NDC
-from .utils import (
-    _tesselate_histogram, _get_texture, _get_array, _get_pos, _get_index)
+from .utils import (_tesselate_histogram, _get_texture, _get_array, _get_pos, _get_index)
 from gui.qt import is_high_dpi
-from phylib.io.array import _as_array
-from phylib.utils import Bunch
-from phylib.utils.geometry import _get_data_bounds
 
+def _get_data_bounds(data_bounds, pos=None, length=None):
+    """"Prepare data bounds, possibly using min/max of the data."""
+    if data_bounds is None or (isinstance(data_bounds, str) and data_bounds == 'auto'):
+        if pos is not None and len(pos):
+            m, M = pos.min(axis=0), pos.max(axis=0)
+            data_bounds = [m[0], m[1], M[0], M[1]]
+        else:
+            data_bounds = [-1, -1, 1, 1]
+    data_bounds = np.atleast_2d(data_bounds)
+
+    ind_x = data_bounds[:, 0] == data_bounds[:, 2]
+    ind_y = data_bounds[:, 1] == data_bounds[:, 3]
+    if np.sum(ind_x):
+        data_bounds[ind_x, 0] -= 1
+        data_bounds[ind_x, 2] += 1
+    if np.sum(ind_y):
+        data_bounds[ind_y, 1] -= 1
+        data_bounds[ind_y, 3] += 1
+
+    # Extend the data_bounds if needed.
+    if length is None:
+        length = pos.shape[0] if pos is not None else 1
+    if data_bounds.shape[0] == 1:
+        data_bounds = np.tile(data_bounds, (length, 1))
+
+    # Check the shape of data_bounds.
+    assert data_bounds.shape == (length, 4)
+
+    assert data_bounds.ndim == 2
+    assert data_bounds.shape[1] == 4
+    assert np.all(data_bounds[:, 0] < data_bounds[:, 2])
+    assert np.all(data_bounds[:, 1] < data_bounds[:, 3])
+
+    return data_bounds
+
+class Bunch(dict):
+    """A subclass of dictionary with an additional dot syntax."""
+    def __init__(self, *args, **kwargs):
+        super(Bunch, self).__init__(*args, **kwargs)
+        self.__dict__ = self
+
+    def copy(self):
+        """Return a new Bunch instance which is a copy of the current Bunch instance."""
+        return Bunch(super(Bunch, self).copy())
+
+def _as_array(arr, dtype=None):
+    """Convert an object to a numerical NumPy array.
+
+    Avoid a copy if possible.
+
+    """
+    if arr is None:
+        return None
+    if isinstance(arr, np.ndarray) and dtype is None:
+        return arr
+    if isinstance(arr, (int, float)):
+        arr = [arr]
+    out = np.asarray(arr)
+    if dtype is not None:
+        if out.dtype != dtype:
+            out = out.astype(dtype)
+    if out.dtype not in _ACCEPTED_ARRAY_DTYPES:
+        raise ValueError("'arr' seems to have an invalid dtype: "
+                         "{0:s}".format(str(out.dtype)))
+    return out
 
 #------------------------------------------------------------------------------
 # Utils

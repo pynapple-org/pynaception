@@ -550,7 +550,7 @@ class Snippets(object):
 
     def __init__(self, gui):
         self.gui = gui
-        self._status_message = gui.status_message
+        # self._status_message = gui.status_message
 
         self.actions = Actions(gui, name='Snippets', menu='&File')
 
@@ -568,7 +568,7 @@ class Snippets(object):
     def command(self):
         """This is used to write a snippet message in the status bar. A cursor is appended at
         the end."""
-        msg = self.gui.status_message
+        # msg = self.gui.status_message
         n = len(msg)
         n_cur = len(self.cursor)
         return msg[:n - n_cur]
@@ -577,7 +577,7 @@ class Snippets(object):
     def command(self, value):
         value += self.cursor
         self.gui.unlock_status()
-        self.gui.status_message = value
+        # self.gui.status_message = value
         self.gui.lock_status()
 
     def _backspace(self):
@@ -666,7 +666,7 @@ class Snippets(object):
         """Enable the snippet mode."""
         logger.debug("Snippet mode enabled, press `escape` to leave this mode.")
         # Save the current status message.
-        self._status_message = self.gui.status_message
+        # self._status_message = self.gui.status_message
         self.gui.lock_status()
 
         # Silent all actions except the Snippets actions.
@@ -682,7 +682,7 @@ class Snippets(object):
         self.gui.unlock_status()
         # Reset the GUI status message that was set before the mode was
         # activated.
-        self.gui.status_message = self._status_message
+        # self.gui.status_message = self._status_message
 
         # Re-enable all actions except the Snippets actions.
         self.actions.disable()
